@@ -1,101 +1,111 @@
-import Image from "next/image";
+"use client"
+import ProblemsTable from "@/components/ProblemsTable";
+import Topbar from "@/components/Topbar";
+// import { firestore } from "@/firebase/firebase";
+import useHasMounted from "@/hooks/useHasMounted";
+// import { doc, setDoc } from "firebase/firestore";
+import { useState } from "react";
 
 export default function Home() {
+  const [loadingProblems, setLoadingProblems] = useState(true);
+  // const [inputs, setInputs] = useState({
+  //   id: '',
+  //   title: '',
+  //   difficulty: '',
+  //   category: '',
+  //   videoId: '',
+  //   order: '',
+  //   link: '',
+  //   likes: 0,
+  //   dislikes: 0
+  // });
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setInputs({
+  //     ...inputs,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault(); // prevent page refresh
+  //   const newProblem = {
+  //     ...inputs,
+  //     order: Number(inputs.order)
+  //   };
+  //   await setDoc(doc(firestore, "problem", inputs.id), newProblem); // that's how to save a data in a collection named "problems" in firestore
+  //   alert('Saved To Firestore')
+  // }
+  const hasMounted = useHasMounted();
+  if(!hasMounted){
+    return null;
+  }
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  <>
+    <main className='bg-[#091235] min-h-screen'>
+      <Topbar />
+      <h1
+        className='text-2xl text-center text-[#dfdfdf] font-sembold tracking-wider
+        uppercase mt-10 mb-5'
+      >
+        Tackle Coding Challenges on Code-Bharat!
+      </h1>
+      <div className='relative overflow-x-auto mx-auto px-6 pb-10'>
+        {loadingProblems && (
+          <div className='max-w-[1200px] mx-auto sm:w-7/12 w-full animate-pulse'>
+            {[...Array(10)].map((_, idx) => (
+              <LoadingSkeleton key={idx} />
+            ))}
+          </div>
+        )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <table className='text-sm text-left text-[#dfdfdf] sm:w-7/12 w-full max-w-[1200px] mx-auto'>
+          {!loadingProblems &&(
+            <thead className='text-xs text-[#dfdfdf] uppercase dark:text-[#dfdfdf] border-b '>
+              <tr>
+                <th scope='col' className='px-1 py-3 w-0 font-medium'>
+                  Status
+                </th>
+                <th scope='col' className='px-6 py-3 w-0 font-medium'>
+                  Title
+                </th>
+                <th scope='col' className='px-6 py-3 w-0 font-medium'>
+                  Difficulty
+                </th>
+
+                <th scope='col' className='px-6 py-3 w-0 font-medium'>
+                  Category
+                </th>
+                <th scope='col' className='px-6 py-3 w-0 font-medium'>
+                  Solution
+                </th>
+              </tr>
+            </thead>
+          )}
+          <ProblemsTable setLoadingProblems={setLoadingProblems} />
+        </table>
+    </main>
+    {/* temp form
+    <form className="p-6 flex flex-col max-w-sm gap-3 bg-colors-dark-gray-7" onSubmit={handleSubmit}>
+      <input onChange={handleInputChange} type="text" placeholder="problem id" name='id' /> 
+      <input onChange={handleInputChange} type="text" placeholder="title" name='title' /> 
+      <input onChange={handleInputChange} type="text" placeholder="difficulty" name='difficulty' /> 
+      <input onChange={handleInputChange} type="text" placeholder="category" name='category' /> 
+      <input onChange={handleInputChange} type="text" placeholder="order" name='order' /> 
+      <input onChange={handleInputChange} type="text" placeholder="videoId?" name='videoId' /> 
+      <input onChange={handleInputChange} type="text" placeholder="link?" name='link' /> 
+      <button type="submit" className="bg-colors-dark-layer-1 text-colors-dark-label-2">Save To Firestore</button>
+
+    </form> */}
+  </>
   );
 }
+const LoadingSkeleton = () => {
+	return (
+		<div className='flex items-center space-x-12 mt-4 px-6'>
+			<div className='w-6 h-6 shrink-0 rounded-full bg-dark-layer-1'></div>
+			<div className='h-4 sm:w-52  w-32  rounded-full bg-dark-layer-1'></div>
+			<div className='h-4 sm:w-52  w-32 rounded-full bg-dark-layer-1'></div>
+			<div className='h-4 sm:w-52 w-32 rounded-full bg-dark-layer-1'></div>
+			<span className='sr-only'>Loading...</span>
+		</div>
+	);
+};

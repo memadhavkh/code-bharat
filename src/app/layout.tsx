@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-
+import RecoilContextProvider from "@/lib/RecoilContextProvider"
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -25,10 +27,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <title>Code Bharat</title>
+        <meta name="description" content="Coding For Bharat" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <RecoilContextProvider>
+          <ToastContainer />
         {children}
+        </RecoilContextProvider>
       </body>
     </html>
   );
