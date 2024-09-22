@@ -1,17 +1,21 @@
 import assert from "assert";
 import { Problem } from "../types/problem";
 
-export const validParenthesesHandler = (fn: any) => {
+export const validParenthesesHandler = (fn: unknown) => {
 	try {
 		const tests = ["()", "()[]{}", "(]", "([)]", "{[]}"];
 		const answers = [true, true, false, false, true];
-		for (let i = 0; i < tests.length; i++) {
-			const result = fn(tests[i]);
-			assert.deepEqual(result, answers[i]);
+		if(typeof fn === "function"){
+			for (let i = 0; i < tests.length; i++) {
+				const result = fn(tests[i]);
+				assert.deepEqual(result, answers[i]);
+			}
+			return true;
 		}
-		return true;
+		return false;
 	} catch (error) {
 		console.error("Error from validParenthesesHandler: ");
+		return false;
 	}
 };
 

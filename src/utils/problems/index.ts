@@ -21,7 +21,7 @@ export const problems: ProblemMap = {
 	"valid-parentheses": validParentheses,
 	"best-time-to-buy-and-sell-stock": bestTimeToBuyAndSellStock,
 	"container-with-most-water": containerWithMostWater,
-	"max-depth-of-binary-tree": maxDepthOfBinaryTree,
+	"maximum-depth-of-binary-tree": maxDepthOfBinaryTree,
 	"merge-intervals": mergeIntervals,
 	"subsets": subsets,
 };

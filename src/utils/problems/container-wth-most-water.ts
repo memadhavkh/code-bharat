@@ -2,7 +2,7 @@ import assert from "assert";
 import { Problem } from "../types/problem";
 import example from "./images/container-1.jpg";
 
-export const containerHandler = (fn: any) => {
+export const containerHandler = (fn: unknown) => {
 	try {
 		const tests = [
             [1,8,6,2,5,4,8,3,7],
@@ -10,13 +10,16 @@ export const containerHandler = (fn: any) => {
         ];
 		const answers = [49, 1];
 		for (let i = 0; i < tests.length; i++) {
-			const result = fn(tests[i]);
+			if(typeof fn === "function") {
+				const result = fn(tests[i]);
 			assert.equal(result, answers[i]);
+			return true;
+			}
 		}
-		return true;
-	} catch (error: any) {
+		return false;
+	} catch (error: unknown) {
 		console.log("Error from ContainerHandler: ", error);
-		throw new Error(error);
+		return false;
 	}
 };
 

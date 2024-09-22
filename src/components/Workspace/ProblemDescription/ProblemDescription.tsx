@@ -2,7 +2,7 @@ import CircleSkeleton from "@/components/Skeletons/CircleSkeleton";
 import RectangleSkeleton from "@/components/Skeletons/RectangleSkeleton";
 import { auth, firestore } from "@/firebase/firebase";
 import { DBProblem, Problem } from "@/utils/types/problem";
-import { arrayRemove, arrayUnion, doc, getDoc, runTransaction, updateDoc } from "firebase/firestore";
+import { arrayRemove, arrayUnion, doc, getDoc, runTransaction, Transaction, updateDoc } from "firebase/firestore";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -25,7 +25,7 @@ const ProblemDescription: React.FC<ProblemDescriptionProps> = ({ problem, _solve
 	useEffect(() => {
 		console.log(currentProblem);
 	})
-	const returnUserDataAndProblemData = async (transaction: any) => {
+	const returnUserDataAndProblemData = async (transaction: Transaction) => {
 		const userRef = doc(firestore, "users", user!.uid); // user!.uid is telling typescript that user can't be null
 		const problemRef = doc(firestore, "problem", problem.id);
 		const userDoc = await transaction.get(userRef);

@@ -34,7 +34,7 @@ const Topbar: React.FC<TopbarProps> = ({ problemPage }) => {
 	if(!hasMounted) return null;
 
 	const handleProblemChange = (isForward: boolean) => {
-		const { order } = problems[pid] as Problem;
+		const { order } = problems[pid!] as Problem;
 		const direction = isForward ? 1 : -1;
 		const nextProblemOrder = order + direction;
 		const nextProblemKey = Object.keys(problems).find((key) => problems[key].order === nextProblemOrder);

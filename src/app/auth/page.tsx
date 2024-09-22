@@ -2,7 +2,7 @@
 import * as Components from "./Components";
 import { auth, firestore } from "@/firebase/firebase";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import {
   useCreateUserWithEmailAndPassword,
@@ -18,7 +18,7 @@ const Auth = () => {
   const [modalState, setModalState] = useState(false);
   const router = useRouter();
   const [inputs1, setInputs1] = useState({ loginEmail: "", loginPassword: "" });
-  const [signInWithEmailAndPassword, loading, error] =
+  const [signInWithEmailAndPassword, loading] =
     useSignInWithEmailAndPassword(auth);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs1((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -46,7 +46,7 @@ const Auth = () => {
   };
   
   // Sign UP part
-  const [createUserWithEmailAndPassword, loading1, error1] = useCreateUserWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword, loading1] = useCreateUserWithEmailAndPassword(auth);
   const [inputs2, setInputs2] = useState({
     email: "",
     displayName: "",

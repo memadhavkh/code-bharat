@@ -1,12 +1,14 @@
 import assert from "assert";
 import { Problem } from "../types/problem";
 
+type TwoSumFn = (nums: number[], target: number) => number[];
+
 const starterCodeTwoSum = `function twoSum(nums,target){
   // Write your code here
 };`;
 
 // checks if the user has the correct code
-const handlerTwoSum = (fn: any) => {
+const handlerTwoSum = (fn: TwoSumFn | unknown) => {
 	// fn is the callback that user's code is passed into
 	try {
 		const nums = [
@@ -22,16 +24,19 @@ const handlerTwoSum = (fn: any) => {
 			[0, 1],
 		];
 
-		// loop all tests to check if the user's code is correct
-		for (let i = 0; i < nums.length; i++) {
-			// result is the output of the user's function and answer is the expected output
-			const result = fn(nums[i], targets[i]);
-			assert.deepStrictEqual(result, answers[i]);
+		// Check if fn is a function and has the correct type
+		if (typeof fn === "function") {
+			for (let i = 0; i < nums.length; i++) {
+				const typedFn = fn as TwoSumFn
+				const result = typedFn(nums[i], targets[i]);
+				assert.deepStrictEqual(result, answers[i]);
+			}
+			return true;
 		}
-		return true;
-	} catch (error: any) {
-		console.log("twoSum handler function error");
-		throw new Error(error);
+		return false;
+	} catch (error: unknown) {
+		console.log("twoSum handler function error", error);
+		return false;
 	}
 };
 

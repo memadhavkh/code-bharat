@@ -1,7 +1,7 @@
 import assert from "assert";
 import { Problem } from "../types/problem";
 
-export const bestTimeHandler = (fn: any) => {
+export const bestTimeHandler = (fn: unknown) => {
 	try {
 		const tests = [
 			[7, 1, 5, 3, 6, 4],
@@ -9,13 +9,16 @@ export const bestTimeHandler = (fn: any) => {
 		];
 		const answers = [5, 0];
 		for (let i = 0; i < tests.length; i++) {
-			const result = fn(tests[i]);
-			assert.equal(result, answers[i]);
+			if(typeof fn === "function") {
+				const result = fn(tests[i]);
+				assert.equal(result, answers[i]);
+				return true;
+			}
 		}
-		return true;
-	} catch (error: any) {
+		return false;
+	} catch (error: unknown) {
 		console.log("Error from best-time-to-bs Handler: ", error);
-		throw new Error(error);
+		return false;
 	}
 };
 

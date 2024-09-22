@@ -1,7 +1,7 @@
 import assert from "assert";
 import { Problem } from "../types/problem";
 
-export const mergeIntervalsHandler = (fn: any) => {
+export const mergeIntervalsHandler = (fn: unknown) => {
 	try {
 		const tests = [
             [[1,3],[2,6],[8,10],[15,18]],
@@ -11,13 +11,17 @@ export const mergeIntervalsHandler = (fn: any) => {
             [[1,6],[8,10],[15,18]],
             [[1,5]]
         ];
-		for (let i = 0; i < tests.length; i++) {
-			const result = fn(tests[i]);
-			assert.deepEqual(result, answers[i]);
+		if(typeof fn === "function"){
+			for (let i = 0; i < tests.length; i++) {
+				const result = fn(tests[i]);
+				assert.deepEqual(result, answers[i]);
+				return true;
+			}
 		}
-		return true;
+		return false;
 	} catch (error) {
 		console.error("Error from mergeIntervals Handler: ");
+		return false;
 	}
 };
 
