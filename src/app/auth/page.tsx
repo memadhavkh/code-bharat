@@ -33,7 +33,6 @@ const Auth = () => {
         inputs1.loginEmail,
         inputs1.loginPassword
       );
-      console.log(newUser);
       if (!newUser) return;
       router.push("/");
     } catch (error) {
