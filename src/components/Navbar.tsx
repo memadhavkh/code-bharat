@@ -8,6 +8,7 @@ import image from '../../public/logo-original.png'
 const Navbar = () => {
 	const path = usePathname();
 	const showLoginButton: boolean = path.slice(-4) === "auth";
+	
   return (
     <div className='flex items-center justify-between sm:px-12 px-2 md:px-24'>
 			<Link href='/' className='flex items-center justify-center h-20'>
